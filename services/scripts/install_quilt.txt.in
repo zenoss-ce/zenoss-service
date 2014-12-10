@@ -1,0 +1,19 @@
+# This script can be used to install quilt into a Zenoss image
+# 
+# Run via 'serviced script service Zenoss.%%FLAVOR%%/Zope install_quilt.txt' and restart all
+# services based on the zenoss-* image
+
+DESCRIPTION  Quilt Installation
+VERSION   zenoss-quilt-1.0
+DEPENDENCY 1.0
+REQUIRE_SVC
+SNAPSHOT
+
+# These commands will download the EPEL RPM, install it, then install quilt
+# from it, then clean up
+SVC_START Zenoss.%%FLAVOR%%/MariaDB
+SVC_EXEC COMMIT Zenoss.%%FLAVOR%%/Zope yum install -y http://mirror.pnl.gov/epel/7/x86_64/e/epel-release-7-2.noarch.rpm
+SVC_EXEC COMMIT Zenoss.%%FLAVOR%%/Zope yum makecache -y
+SVC_EXEC COMMIT Zenoss.%%FLAVOR%%/Zope yum install -y quilt
+SVC_EXEC COMMIT Zenoss.%%FLAVOR%%/Zope yum erase -y epel-release
+SVC_EXEC COMMIT Zenoss.%%FLAVOR%%/Zope yum clean all
