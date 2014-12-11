@@ -29,7 +29,7 @@ SVC_WAIT Zenoss.%%FLAVOR%%/redis started 600
 SVC_RUN Zenoss.%%FLAVOR%%/Zope upgrade
 
 # Uncomment this to restart the entire application afterwards
-# SVC_RESTART Zenoss.%%FLAVOR%%/MariaDB
+# SVC_RESTART Zenoss.%%FLAVOR%%
 
 # Uncomment this if you have run the install_quilt script first, and are using
 # quilt (based in /opt/zenoss) to manage patches
