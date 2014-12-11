@@ -1,22 +1,36 @@
 # This script can be used to upgrade a Zenoss deployment to a new image
 #
-# Run via 'serviced script service Zenoss.%%FLAVOR%%/Zope upgrade.txt' and restart
+# Run via 'serviced script service Zenoss.%%FLAVOR%% upgrade.txt' and restart
 # the deployment
 
 DESCRIPTION  Zenoss RM 5.0.%%MINOR_RELEASE%% upgrade
 VERSION   %%FLAVOR%%-5.0.%%MINOR_RELEASE%%
-DEPENDENCY 1.0
 REQUIRE_SVC
 SNAPSHOT
 
-SVC_USE  zenoss/%%FLAVOR%%-%%STABILITY%%:5.0.%%MINOR_RELEASE%%
+# Choose image to upgrade to
+SVC_USE zenoss/%%FLAVOR%%-%%STABILITY%%:5.0.%%MINOR_RELEASE%%
+
+# Start all our dependent services
 SVC_START Zenoss.%%FLAVOR%%/MariaDB
 SVC_START Zenoss.%%FLAVOR%%/RabbitMQ
 SVC_START Zenoss.%%FLAVOR%%/zeneventserver
 SVC_START Zenoss.%%FLAVOR%%/zencatalogservice
 SVC_START Zenoss.%%FLAVOR%%/redis
+
+# Wait for our services to start
+SVC_WAIT Zenoss.%%FLAVOR%%/MariaDB started 600
+SVC_WAIT Zenoss.%%FLAVOR%%/RabbitMQ started 600
+SVC_WAIT Zenoss.%%FLAVOR%%/zeneventserver started 600
+SVC_WAIT Zenoss.%%FLAVOR%%/zencatalogservice started 600
+SVC_WAIT Zenoss.%%FLAVOR%%/redis started 600
+
+# Run the upgrade 'run'
 SVC_RUN Zenoss.%%FLAVOR%%/Zope upgrade
+
+# Uncomment this to restart the entire application afterwards
+# SVC_RESTART Zenoss.%%FLAVOR%%/MariaDB
 
 # Uncomment this if you have run the install_quilt script first, and are using
 # quilt (based in /opt/zenoss) to manage patches
-#SVC_RUN Zenoss.%%FLAVOR%%/Zope apply-custom-patches
+# SVC_RUN Zenoss.%%FLAVOR%%/Zope apply-custom-patches

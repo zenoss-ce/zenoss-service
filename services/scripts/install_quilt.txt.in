@@ -5,7 +5,6 @@
 
 DESCRIPTION  Quilt Installation
 VERSION   zenoss-quilt-1.0
-DEPENDENCY 1.0
 REQUIRE_SVC
 SNAPSHOT
 
