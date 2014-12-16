@@ -10,7 +10,7 @@ SNAPSHOT
 
 # These commands will download the EPEL RPM, install it, then install quilt
 # from it, then clean up
-SVC_EXEC COMMIT Zenoss.%%FLAVOR%% yum install -y http://mirror.pnl.gov/epel/7/x86_64/e/epel-release-7-2.noarch.rpm
+SVC_EXEC COMMIT Zenoss.%%FLAVOR%% yum install -y epel-release
 SVC_EXEC COMMIT Zenoss.%%FLAVOR%% yum makecache -y
 SVC_EXEC COMMIT Zenoss.%%FLAVOR%% yum install -y quilt
 SVC_EXEC COMMIT Zenoss.%%FLAVOR%% yum erase -y epel-release
