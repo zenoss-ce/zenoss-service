@@ -1,21 +1,26 @@
 {
-    "Description": "MariaDB database server",
+    "CPUCommitment": 4,
     "Command": "/usr/bin/mysqld_safe",
+    "Description": "MariaDB database server",
     "Endpoints": [
         {
-            "Name": "mariadb",
             "Application": "zodb_mariadb",
+            "Name": "mariadb",
             "PortNumber": 3306,
             "Protocol": "tcp",
             "Purpose": "export"
         }
     ],
+    "HealthChecks": {
+        "answering": {
+            "Interval": 5.0,
+            "Script": "mysql --protocol TCP -uroot -hlocalhost -P3306 -e 'select 1' > /dev/null"
+        }
+    },
     "ImageID": "zenoss/zenoss5x",
     "Instances": {
         "min": 1
     },
-    "RAMCommitment": "2G",
-    "CPUCommitment": 4,
     "Launch": "auto",
     "LogConfigs": [
         {
@@ -24,6 +29,8 @@
         }
     ],
     "Name": "MariaDB",
+    "PIDFile": "exec echo /var/lib/mysql/$(hostname).pid",
+    "RAMCommitment": "2G",
     "Runs": {
         "rebuild_zodb_session": "${ZENHOME:-/opt/zenoss}/bin/zenrun mysql.sh rebuild_zodb_session"
     },
@@ -36,18 +43,11 @@
     ],
     "Volumes": [
         {
-            "#####":         "drwxr-xr-x 12 mysql mysql 4096 Feb 25 21:27 /var/lib/mysql/",
-            "Owner":         "mysql:mysql",
-            "Permission":    "0755",
-            "ResourcePath":  "mariadb",
-            "ContainerPath": "/var/lib/mysql"
+            "#####": "drwxr-xr-x 12 mysql mysql 4096 Feb 25 21:27 /var/lib/mysql/",
+            "ContainerPath": "/var/lib/mysql",
+            "Owner": "mysql:mysql",
+            "Permission": "0755",
+            "ResourcePath": "mariadb"
         }
-    ],
-    "HealthChecks": {
-        "answering": {
-            "Script": "mysql --protocol TCP -uroot -hlocalhost -P3306 -e 'select 1' > /dev/null",
-            "Interval": 5.0
-        }
-    },
-    "PIDFile": "exec echo /var/lib/mysql/$(hostname).pid"
+    ]
 }

@@ -1,21 +1,26 @@
 {
-    "Description": "Redis server",
+    "CPUCommitment": 1,
     "Command": "/usr/bin/redis-server /etc/redis.conf",
+    "Description": "Redis server",
     "Endpoints": [
         {
-            "Name": "redis",
             "Application": "redis",
+            "Name": "redis",
             "PortNumber": 6379,
             "Protocol": "tcp",
             "Purpose": "export"
         }
     ],
+    "HealthChecks": {
+        "answering": {
+            "Interval": 5.0,
+            "Script": "redis-cli ping | grep -q PONG"
+        }
+    },
     "ImageID": "zenoss/zenoss5x",
     "Instances": {
         "min": 1
     },
-    "RAMCommitment": "1G",
-    "CPUCommitment": 1,
     "Launch": "auto",
     "LogConfigs": [
         {
@@ -24,13 +29,8 @@
         }
     ],
     "Name": "redis",
+    "RAMCommitment": "1G",
     "Tags": [
         "daemon"
-    ],
-    "HealthChecks": {
-        "answering": {
-            "Script": "redis-cli ping | grep -q PONG",
-            "Interval": 5.0            
-        }
-    }
+    ]
 }
