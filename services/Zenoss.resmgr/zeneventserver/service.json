@@ -104,6 +104,10 @@
         }
     ],
     "Name": "zeneventserver",
+    "Runs": {
+        "zenackevents": "${ZENHOME:-/opt/zenoss}/bin/zenackevents"
+    },
+
     "Tags": [
         "daemon"
     ],
