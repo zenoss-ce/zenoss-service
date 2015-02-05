@@ -3,15 +3,15 @@
     "Actions": {
       "debug": "bash -c 'curl -X POST http://localhost:58888/tasks/debugtoggle'"
     },
-    "Command": "su - zenoss -c \"cd /opt/zenoss && /bin/supervisord -n -c etc/central-query/supervisord.conf\"",
+    "Command": "su - zenoss -c \"cd /opt/zenoss && /bin/supervisord -n -c etc/central-query-app/supervisord.conf\"",
     "ConfigFiles": {
-       "/opt/zenoss/etc/central-query/central-query_supervisor.conf": {
-            "FileName": "/opt/zenoss/etc/central-query/central-query_supervisor.conf",
+       "/opt/zenoss/etc/central-query-app/central-query-app_supervisor.conf": {
+            "FileName": "/opt/zenoss/etc/central-query-app/central-query-app_supervisor.conf",
             "Owner": "zenoss:zenoss",
             "Permissions": "0644"
        },
-	"/opt/zenoss/etc/central-query/configuration.yaml": {
-            "FileName": "/opt/zenoss/etc/central-query/configuration.yaml",
+	"/opt/zenoss/etc/central-query-app/configuration.yaml": {
+            "FileName": "/opt/zenoss/etc/central-query-app/configuration.yaml",
             "Owner": "zenoss:zenoss",
             "Permissions": "0644"
 	}
@@ -51,7 +51,7 @@
             "filters": [
                 "zappdaemon"
             ],
-            "path": "/opt/zenoss/log/central-query.log",
+            "path": "/opt/zenoss/log/central-query-app.log",
             "type": "centralquery"
         }
     ],
