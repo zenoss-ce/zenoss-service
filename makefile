@@ -4,7 +4,7 @@ VERSION         ?= 5.0.70
 SHORT_VERSION   ?= 5.1
 
 hbase_VERSION    = v7
-opentsdb_VERSION = v13
+opentsdb_VERSION = v14
 
 DOCKER          ?= $(shell which docker)
 BUILD_NUMBER    ?= $(shell date +%Y%m%d%H%M%S)
@@ -23,8 +23,8 @@ MILESTONE        ?= unstable # unstable | testing | stable
 MILESTONE_SUFFIX  =
 RELEASE_PHASE    ?= # eg, BETA2 | ALPHA1 | CR13 | 1 | 2 | <blank>
 _RELEASE_PHASE   := $(strip $(RELEASE_PHASE))
-PWD				  = $(shell pwd)
-UID				  = $(shell id -u)
+PWD               = $(shell pwd)
+UID               = $(shell id -u)
 
 # Allow milestone to influence our artifact versioning.
 BUILD_TAG      = $($(strip $(MILESTONE))_TAG)
@@ -68,7 +68,7 @@ docker_PREFIX         = $($(docker_HOST)_REGPATH)$($(docker_HOST)_USER)/
 
 # Mechanism for overriding ImageIDs in service definition json source:
 #
-# from: ImageID: "zenoss/zenoss5x" 
+# from: ImageID: "zenoss/zenoss5x"
 # into: ImageID: "quay.io/zenossinc/zenoss-core-testing:5.0.0b1_521"
 
 jsonsrc_zenoss_ImageID = zenoss/zenoss5x
@@ -76,8 +76,8 @@ desired_zenoss_ImageID = $(docker_PREFIX)$($(docker_HOST)_$(short_product)_REPO)
 svcdef_ImageID_maps   += $(jsonsrc_zenoss_ImageID),$(desired_zenoss_ImageID)
 
 #
-# Allow json to be updated automatically at build time if we switch publish 
-# repos in the makefile.  
+# Allow json to be updated automatically at build time if we switch publish
+# repos in the makefile.
 #
 # NB: jsonsrc_<prod>_ImageID = what is currently in the source code.
 #     desired_<prod>_ImageID = what you want the ID to be
@@ -94,11 +94,11 @@ svcdef_ImageID_maps     += $(jsonsrc_opentsdb_ImageID),$(desired_opentsdb_ImageI
 
 
 $(SRCROOT):
-	services
+    services
 
 SVCDEF_EXE = pkg/serviced
 $(SVCDEF_EXE):
-	cd $(shell dirname $@) && make $(shell basename $@)
+    cd $(shell dirname $@) && make $(shell basename $@)
 
 #---------------------#
 # Service Definitions #
@@ -139,7 +139,7 @@ zenoss-resmgr-$(BUILD_TAG).json_SRC     := $(shell find $(zenoss-resmgr-$(BUILD_
 zenoss-ucspm-$(BUILD_TAG).json_SRC_DIR := $(svcdef_SRC_DIR)/Zenoss.ucspm
 zenoss-ucspm-$(BUILD_TAG).json_SRC     := $(shell find $(zenoss-ucspm-$(BUILD_TAG).json_SRC_DIR) -type f -name '*.json')
 #-------------------------------------#
- 
+
 # Rule to build service defintions for a list of products.
 #
 #
@@ -154,19 +154,19 @@ $(svcdef_BUILD_TARGETS): short_product = $(patsubst zenoss-%,%,$(patsubst %-$(BU
 $(svcdef_BUILD_TARGETS): map_opt       = $(patsubst %,-map %,$(svcdef_ImageID_maps))
 $(svcdef_BUILD_TARGETS): src_dir       = $($(@F)_SRC_DIR)
 $(svcdef_BUILD_TARGETS): $$($$(@F)_SRC) | $(SVCDEF_EXE) $(OUTPUT) $$(@D)
-	@compile_CMD="$(SVCDEF_EXE) template compile $(map_opt) $(src_dir) > $@" ;\
-	echo $${compile_CMD} ;\
-	eval $${compile_CMD} 2>/dev/null ;\
-	rc=$$? ;\
-	if [ $${rc} -ne 0 ];then \
-		echo "Error: Unable to compile service definition." ;\
-		echo "       $${compile_CMD}" ;\
-		if [ -f "$@" ];then \
-			rm $@ ;\
-		fi ;\
-		exit $${rc} ;\
-	fi
-	cp $@ $(OUTPUT)
+    @compile_CMD="$(SVCDEF_EXE) template compile $(map_opt) $(src_dir) > $@" ;\
+    echo $${compile_CMD} ;\
+    eval $${compile_CMD} 2>/dev/null ;\
+    rc=$$? ;\
+    if [ $${rc} -ne 0 ];then \
+        echo "Error: Unable to compile service definition." ;\
+        echo "       $${compile_CMD}" ;\
+        if [ -f "$@" ];then \
+            rm $@ ;\
+        fi ;\
+        exit $${rc} ;\
+    fi
+    cp $@ $(OUTPUT)
 
 # Convenience target for building just the service definition template.
 #
@@ -175,58 +175,58 @@ $(svcdef_BUILD_TARGETS): $$($$(@F)_SRC) | $(SVCDEF_EXE) $(OUTPUT) $$(@D)
 svcdef-%: product = $(patsubst %,zenoss-%,$(patsubst zenoss-%,%,$*))
 svcdef-%: target  = $(svcdef_BUILD_DIR)/$(product)-$(BUILD_TAG).json
 svcdef-%: | $(svcdef_BUILD_DIR)
-	$(MAKE) $(target)
+    $(MAKE) $(target)
 
 svcdefpkg-%: product = $(patsubst %,zenoss-%,$(patsubst zenoss-%,%,$*))
 svcdefpkg-%: | $(svcdef_BUILD_DIR) $(OUTPUT)
-	cd pkg && make clean
-	# Generate service definitions for this tag
-	$(MAKE) $(svcdef_BUILD_DIR)/$(product)-$(BUILD_TAG).json
-	# Package the template
-	cd pkg && make \
-		VERSION=$(VERSION) \
-		BUILD_NUMBER=$(BUILD_NUMBER) \
-		RELEASE_PHASE=$(_RELEASE_PHASE) \
-		NAME=$(product) \
-		TEMPLATE_FILE=../$(svcdef_BUILD_DIR)/$(product)-$(BUILD_TAG).json \
-		deb
-	cp pkg/$(product)-*.deb $(OUTPUT)
-	cd pkg && make \
-		VERSION=$(VERSION) \
-		BUILD_NUMBER=$(BUILD_NUMBER) \
-		RELEASE_PHASE=$(_RELEASE_PHASE) \
-		NAME=$(product) \
-		TEMPLATE_FILE=../$(svcdef_BUILD_DIR)/$(product)-$(BUILD_TAG).json \
-		rpm
-	cp pkg/$(product)-*.rpm $(OUTPUT)
+    cd pkg && make clean
+    # Generate service definitions for this tag
+    $(MAKE) $(svcdef_BUILD_DIR)/$(product)-$(BUILD_TAG).json
+    # Package the template
+    cd pkg && make \
+        VERSION=$(VERSION) \
+        BUILD_NUMBER=$(BUILD_NUMBER) \
+        RELEASE_PHASE=$(_RELEASE_PHASE) \
+        NAME=$(product) \
+        TEMPLATE_FILE=../$(svcdef_BUILD_DIR)/$(product)-$(BUILD_TAG).json \
+        deb
+    cp pkg/$(product)-*.deb $(OUTPUT)
+    cd pkg && make \
+        VERSION=$(VERSION) \
+        BUILD_NUMBER=$(BUILD_NUMBER) \
+        RELEASE_PHASE=$(_RELEASE_PHASE) \
+        NAME=$(product) \
+        TEMPLATE_FILE=../$(svcdef_BUILD_DIR)/$(product)-$(BUILD_TAG).json \
+        rpm
+    cp pkg/$(product)-*.rpm $(OUTPUT)
 
 ######################
 # Dockerized targets #
 #####################
 
 docker_buildimage:
-	$(DOCKER) build -t $(BUILD_IMAGE) hack/
+    $(DOCKER) build -t $(BUILD_IMAGE) hack/
 
 docker_svcdefpkg-%: docker_buildimage
-	$(DOCKER) run -v $(PWD):/mnt/pwd \
-		-v $(OUTPUT):/mnt/pwd/output \
-		-w /mnt/pwd \
-		$(BUILD_IMAGE) \
-		bash -c '/mnt/pwd/pkg/add_user.sh $(UID) && su serviceduser -c "make BUILD_NUMBER=$(_BUILD_NUMBER) IMAGE_NUMBER=$(IMAGE_NUMBER) MILESTONE=$(MILESTONE) RELEASE_PHASE=$(RELEASE_PHASE) svcdefpkg-$*"'
+    $(DOCKER) run -v $(PWD):/mnt/pwd \
+        -v $(OUTPUT):/mnt/pwd/output \
+        -w /mnt/pwd \
+        $(BUILD_IMAGE) \
+        bash -c '/mnt/pwd/pkg/add_user.sh $(UID) && su serviceduser -c "make BUILD_NUMBER=$(_BUILD_NUMBER) IMAGE_NUMBER=$(IMAGE_NUMBER) MILESTONE=$(MILESTONE) RELEASE_PHASE=$(RELEASE_PHASE) svcdefpkg-$*"'
 
 clean:
-	@for dir in $(MKDIRS) ;\
-	do \
-		if [ -d $${dir} ];then \
-			echo "rm -rf $${dir}" ;\
-			rm -rf $${dir} ;\
-		fi ;\
-	done
-	cd pkg && make clean
+    @for dir in $(MKDIRS) ;\
+    do \
+        if [ -d $${dir} ];then \
+            echo "rm -rf $${dir}" ;\
+            rm -rf $${dir} ;\
+        fi ;\
+    done
+    cd pkg && make clean
 
 MKDIRS = $(OUTPUT) buildroot buildroot/output $(svcdef_BUILD_DIR)
 $(MKDIRS):
-	@if [ ! -d "$@" ];then \
-		echo "mkdir -p $@" ;\
-		mkdir -p $@ ;\
-	fi
+    @if [ ! -d "$@" ];then \
+        echo "mkdir -p $@" ;\
+        mkdir -p $@ ;\
+    fi
