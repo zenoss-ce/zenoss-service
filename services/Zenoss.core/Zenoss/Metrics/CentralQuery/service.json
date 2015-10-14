@@ -171,8 +171,8 @@
                         "fill": false,
                         "id": "Queries",
                         "legend": "Queries",
-                        "metric": "ZEN_INF.org.zenoss.app.metricservice.api.metric.remote.MetricResources.query.count",
-                        "metricSource": "MetricResources.query",
+                        "metric": "ZEN_INF.org.zenoss.app.metricresource.api.metric.remote.MetricResources.query.count",
+                        "metricSource": "MetricsResources.post",
                         "name": "Queries",
                         "rate": true,
                         "type": "line"
