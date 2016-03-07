@@ -1,10 +1,10 @@
 # VERSION is the full Zenoss version; e.g., 5.0.0
 # SHORT_VERSION is the two-digit Zenoss version; e.g., 5.0
-VERSION         ?= 5.0.70
+VERSION         ?= 5.1.1
 SHORT_VERSION   ?= 5.1
 
-hbase_VERSION    = v7
-opentsdb_VERSION = v13
+hbase_VERSION    = v10
+opentsdb_VERSION = v17
 
 DOCKER          ?= $(shell which docker)
 BUILD_NUMBER    ?= $(shell date +%Y%m%d%H%M%S)
@@ -68,7 +68,7 @@ docker_PREFIX         = $($(docker_HOST)_REGPATH)$($(docker_HOST)_USER)/
 
 # Mechanism for overriding ImageIDs in service definition json source:
 #
-# from: ImageID: "zenoss/zenoss5x" 
+# from: ImageID: "zenoss/zenoss5x"
 # into: ImageID: "quay.io/zenossinc/zenoss-core-testing:5.0.0b1_521"
 
 jsonsrc_zenoss_ImageID = zenoss/zenoss5x
@@ -76,8 +76,8 @@ desired_zenoss_ImageID = $(docker_PREFIX)$($(docker_HOST)_$(short_product)_REPO)
 svcdef_ImageID_maps   += $(jsonsrc_zenoss_ImageID),$(desired_zenoss_ImageID)
 
 #
-# Allow json to be updated automatically at build time if we switch publish 
-# repos in the makefile.  
+# Allow json to be updated automatically at build time if we switch publish
+# repos in the makefile.
 #
 # NB: jsonsrc_<prod>_ImageID = what is currently in the source code.
 #     desired_<prod>_ImageID = what you want the ID to be
@@ -131,15 +131,15 @@ svcdef_PRODUCTS = zenoss-core zenoss-resmgr zenoss-ucspm
 svcdef_SRC_DIR  = services
 
 zenoss-core-$(BUILD_TAG).json_SRC_DIR   := $(svcdef_SRC_DIR)/Zenoss.core
-zenoss-core-$(BUILD_TAG).json_SRC       := $(shell find $(zenoss-core-$(BUILD_TAG).json_SRC_DIR) -type f -name '*.json')
+zenoss-core-$(BUILD_TAG).json_SRC       := $(shell find $(zenoss-core-$(BUILD_TAG).json_SRC_DIR) -type f -name '*.json' -print0)
 
 zenoss-resmgr-$(BUILD_TAG).json_SRC_DIR := $(svcdef_SRC_DIR)/Zenoss.resmgr
-zenoss-resmgr-$(BUILD_TAG).json_SRC     := $(shell find $(zenoss-resmgr-$(BUILD_TAG).json_SRC_DIR) -type f -name '*.json')
+zenoss-resmgr-$(BUILD_TAG).json_SRC     := $(shell find $(zenoss-resmgr-$(BUILD_TAG).json_SRC_DIR) -type f -name '*.json' -print0)
 
-zenoss-ucspm-$(BUILD_TAG).json_SRC_DIR := $(svcdef_SRC_DIR)/Zenoss.ucspm
-zenoss-ucspm-$(BUILD_TAG).json_SRC     := $(shell find $(zenoss-ucspm-$(BUILD_TAG).json_SRC_DIR) -type f -name '*.json')
+zenoss-ucspm-$(BUILD_TAG).json_SRC_DIR := $(svcdef_SRC_DIR)/ucspm
+zenoss-ucspm-$(BUILD_TAG).json_SRC     := $(shell find $(zenoss-ucspm-$(BUILD_TAG).json_SRC_DIR) -type f -name '*.json' -print0)
 #-------------------------------------#
- 
+
 # Rule to build service defintions for a list of products.
 #
 #
