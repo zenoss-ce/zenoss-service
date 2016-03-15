@@ -1,6 +1,6 @@
 {
     "CPUCommitment": 2,
-    "Command": "setuser solr /opt/solr/bin/solr -f -cloud -s /opt/solr/server/solr -DzkHost={{with $zks := (child (child (parent .) \"HBase\") \"ZooKeeper\").Instances }}{{range (each $zks)}}127.0.0.1:{{plus 2181 .}}{{if ne (plus 1 .) $zks}},{{end}}{{end}}{{end}}",
+    "Command": "setuser solr /opt/solr/bin/solr -cloud -s /opt/solr/server/solr -DzkRun  -Dbootstrap_confdir=/opt/solr/server/solr/configsets/zenoss_model/conf -Dcollection.configName=zenoss_model",
     "ConfigFiles": {
         "/opt/solr/server/solr/solr.xml": {
             "FileName": "/opt/solr/server/solr/solr.xml",
