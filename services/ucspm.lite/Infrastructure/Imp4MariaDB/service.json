@@ -208,8 +208,8 @@
     "Privileged": false,
     "RAMCommitment": "256M",
     "Snapshot": {
-        "Pause": "",
-        "Resume": ""
+        "Pause": "PAUSE_CHECK_TIMEOUT=60 LOCK_HOLD_DURATION=600 ${ZENHOME:-/opt/zenoss}/bin/quiesce-mariadb.sh pause",
+        "Resume": "${ZENHOME:-/opt/zenoss}/bin/quiesce-mariadb.sh resume"
     },
     "Tags": [
         "daemon"
