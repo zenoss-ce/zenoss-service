@@ -1,0 +1,8 @@
+{
+    "Description": "Demo specific components",
+    "Launch": "auto",
+    "Name": "Demo",
+    "Tags": [
+        "demo"
+    ]
+}

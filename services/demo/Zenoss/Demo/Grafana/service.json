@@ -1,0 +1,80 @@
+{
+    "CPUCommitment": 1,
+    "Command": "/run.sh",
+    "ConfigFiles": {
+        "/etc/grafana/grafana.ini": {
+            "FileName": "/etc/grafana/grafana.ini",
+            "Owner": "root:root",
+            "Permissions": "0664"
+        }
+    },
+    "Description": "Grafana graphing and dashboards",
+    "Endpoints": [
+        {
+            "AddressConfig": {
+                "Port": 3000,
+                "Protocol": "tcp"
+            },
+            "Application": "grafana",
+            "Name": "grafana",
+            "PortNumber": 3000,
+            "Protocol": "tcp",
+            "Purpose": "export",
+            "VHostList": [
+                {
+                    "Enabled": true,
+                    "Name": "grafana"
+                }
+            ]
+        },
+        {
+            "Application": "solr",
+            "Name": "solr",
+            "PortNumber": 8983,
+            "Protocol": "tcp",
+            "Purpose": "import"
+        },
+        {
+            "Application": "opentsdb-reader",
+            "Name": "opentsdb-reader",
+            "PortNumber": 4242,
+            "Protocol": "tcp",
+            "Purpose": "import",
+            "VirtualAddress": "grf:4242"
+        }
+    ],
+    "HealthChecks": {
+        "answering": {
+            "Interval": 10.0,
+            "Script": "curl http://grafana:3000"
+        }
+    },
+    "Hostname": "grafana",
+    "ImageID": "zenoss/demo_grafana:demo_4",
+    "Instances": {
+        "max": 1,
+        "min": 1
+    },
+    "Launch": "auto",
+    "LogConfigs": [
+        {
+            "path": "/opt/grafana/log/grafana.log",
+            "type": "notebook"
+        }
+    ],
+    "Name": "Grafana",
+    "Privileged": true,
+    "RAMCommitment": "1G",
+    "Tags": [
+        "daemon"
+    ],
+    "Volumes": [
+        {
+            "#####": "drwxr-xr-x 13 zenoss zenoss  4096 Mar 17 15:02 /opt/grafana",
+            "ContainerPath": "/opt/grafana",
+            "Owner": "root:root",
+            "Permission": "0755",
+            "ResourcePath": "grafana"
+        }
+    ]
+}
