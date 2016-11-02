@@ -50,7 +50,7 @@
         }
     },
     "Hostname": "grafana",
-    "ImageID": "zenoss/demo_grafana:demo_4",
+    "ImageID": "zenoss/demo-grafana:latest",
     "Instances": {
         "max": 1,
         "min": 1
