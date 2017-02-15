@@ -1,6 +1,6 @@
 {
     "CPUCommitment": 1,
-    "Command": "su - zenoss -c \"/opt/zenoss/bin/runzope\" ",
+    "Command": "su - zenoss -c \"/opt/zenoss/bin/zenrunzope {{(getContext . \"global.conf.zope_max_mem\")}}\"",
     "Commands": {
         "apply-custom-patches": {
             "Command": "${ZENHOME:-/opt/zenoss}/bin/zenrun patch.sh applyPatches",
