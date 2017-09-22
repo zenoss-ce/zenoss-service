@@ -98,6 +98,9 @@
                         "metricSource": "zenmodeler",
                         "name": "Cycle Time",
                         "rate": true,
+                        "rateOptions": {
+                            "counter": true
+                        },
                         "type": "line"
                     }
                 ],
@@ -125,6 +128,9 @@
                         "metricSource": "zenmodeler",
                         "name": "Modeled Devices",
                         "rate": true,
+                        "rateOptions": {
+                            "counter": true
+                        },
                         "type": "line"
                     }
                 ],

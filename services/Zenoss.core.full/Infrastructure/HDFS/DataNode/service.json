@@ -73,10 +73,8 @@
                         "metric": "ReadBlockOpAvgTime",
                         "name": "ReadBlockOpAvgTime",
                         "rate": true,
-                        "rateoptions": {
-                            "counter": true,
-                            "counterMax": null,
-                            "resetThreshold": 1048576
+                        "rateOptions": {
+                            "counter": true
                         },
                         "type": "line"
                     },
@@ -88,10 +86,8 @@
                         "metric": "HeartbeatsAvgTime",
                         "name": "HeartbeatsAvgTime",
                         "rate": true,
-                        "rateoptions": {
-                            "counter": true,
-                            "counterMax": null,
-                            "resetThreshold": 1048576
+                        "rateOptions": {
+                            "counter": true
                         },
                         "type": "line"
                     },
@@ -103,10 +99,8 @@
                         "metric": "BlockReportsAvgTime",
                         "name": "BlockReportsAvgTime",
                         "rate": true,
-                        "rateoptions": {
-                            "counter": true,
-                            "counterMax": null,
-                            "resetThreshold": 1048576
+                        "rateOptions": {
+                            "counter": true
                         },
                         "type": "line"
                     }
@@ -133,10 +127,8 @@
                         "metric": "BlocksWritten",
                         "name": "BlocksWritten",
                         "rate": true,
-                        "rateoptions": {
-                            "counter": true,
-                            "counterMax": null,
-                            "resetThreshold": 1048576
+                        "rateOptions": {
+                            "counter": true
                         },
                         "type": "line"
                     },
@@ -148,10 +140,8 @@
                         "metric": "BlocksRead",
                         "name": "BlocksRead",
                         "rate": true,
-                        "rateoptions": {
-                            "counter": true,
-                            "counterMax": null,
-                            "resetThreshold": 1048576
+                        "rateOptions": {
+                            "counter": true
                         },
                         "type": "line"
                     },
@@ -163,10 +153,8 @@
                         "metric": "BlocksReplicated",
                         "name": "BlocksReplicated",
                         "rate": true,
-                        "rateoptions": {
-                            "counter": true,
-                            "counterMax": null,
-                            "resetThreshold": 1048576
+                        "rateOptions": {
+                            "counter": true
                         },
                         "type": "line"
                     },
@@ -178,10 +166,8 @@
                         "metric": "BlocksRemoved",
                         "name": "BlocksRemoved",
                         "rate": true,
-                        "rateoptions": {
-                            "counter": true,
-                            "counterMax": null,
-                            "resetThreshold": 1048576
+                        "rateOptions": {
+                            "counter": true
                         },
                         "type": "line"
                     }
