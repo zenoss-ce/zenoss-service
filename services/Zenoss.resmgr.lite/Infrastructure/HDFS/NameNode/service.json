@@ -185,10 +185,8 @@
                         "metric": "RpcProcessingTimeNumOps",
                         "name": "RPC Call Count",
                         "rate": true,
-                        "rateoptions": {
-                            "counter": true,
-                            "counterMax": null,
-                            "resetThreshold": 1048576
+                        "rateOptions": {
+                            "counter": true
                         },
                         "type": "line"
                     }
@@ -215,10 +213,8 @@
                         "metric": "PutImageAvgTime",
                         "name": "PutImageAvgTime",
                         "rate": true,
-                        "rateoptions": {
-                            "counter": true,
-                            "counterMax": null,
-                            "resetThreshold": 1048576
+                        "rateOptions": {
+                            "counter": true
                         },
                         "type": "line"
                     },
@@ -230,10 +226,8 @@
                         "metric": "GetImageAvgTime",
                         "name": "GetImageAvgTime",
                         "rate": true,
-                        "rateoptions": {
-                            "counter": true,
-                            "counterMax": null,
-                            "resetThreshold": 1048576
+                        "rateOptions": {
+                            "counter": true
                         },
                         "type": "line"
                     },
@@ -245,10 +239,8 @@
                         "metric": "GetEditAvgTime",
                         "name": "GetEditAvgTime",
                         "rate": true,
-                        "rateoptions": {
-                            "counter": true,
-                            "counterMax": null,
-                            "resetThreshold": 1048576
+                        "rateOptions": {
+                            "counter": true
                         },
                         "type": "line"
                     }

@@ -73,6 +73,9 @@
                         "metricSource": "MetricResources.post",
                         "name": "Queries",
                         "rate": true,
+                        "rateOptions": {
+                            "counter": true
+                        },
                         "type": "line"
                     }
                 ],
