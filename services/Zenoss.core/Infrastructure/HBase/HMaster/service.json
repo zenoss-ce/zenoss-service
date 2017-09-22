@@ -96,10 +96,8 @@
                         "metricSource": "Hmaster",
                         "name": "Total number of fatal log events",
                         "rate": false,
-                        "rateoptions": {
-                            "counter": true,
-                            "counterMax": null,
-                            "resetThreshold": 1048576
+                        "rateOptions": {
+                            "counter": true
                         },
                         "type": "line"
                     },
@@ -112,10 +110,8 @@
                         "metricSource": "Hmaster",
                         "name": "Total number of error log events",
                         "rate": false,
-                        "rateoptions": {
-                            "counter": true,
-                            "counterMax": null,
-                            "resetThreshold": 1048576
+                        "rateOptions": {
+                            "counter": true
                         },
                         "type": "line"
                     },
@@ -128,10 +124,8 @@
                         "metricSource": "Hmaster",
                         "name": "Total number of warn log events",
                         "rate": false,
-                        "rateoptions": {
-                            "counter": true,
-                            "counterMax": null,
-                            "resetThreshold": 1048576
+                        "rateOptions": {
+                            "counter": true
                         },
                         "type": "line"
                     }
@@ -160,10 +154,8 @@
                         "metricSource": "Hmaster",
                         "name": "Total number of live regions servers",
                         "rate": false,
-                        "rateoptions": {
-                            "counter": true,
-                            "counterMax": null,
-                            "resetThreshold": 1048576
+                        "rateOptions": {
+                            "counter": true
                         },
                         "type": "line"
                     },
@@ -176,10 +168,8 @@
                         "metricSource": "Hmaster",
                         "name": "Total number of dead regions servers",
                         "rate": false,
-                        "rateoptions": {
-                            "counter": true,
-                            "counterMax": null,
-                            "resetThreshold": 1048576
+                        "rateOptions": {
+                            "counter": true
                         },
                         "type": "line"
                     }
