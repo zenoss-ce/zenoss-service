@@ -46,6 +46,9 @@
                         "metricSource": "redis",
                         "name": "Total Commands",
                         "rate": true,
+                        "rateOptions": {
+                            "counter": true
+                        },
                         "type": "line"
                     }
                 ],
