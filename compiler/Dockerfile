@@ -1,14 +1,15 @@
-FROM       ubuntu:trusty
-MAINTAINER Zenoss, Inc. <dev@zenoss.com>
+FROM ubuntu:bionic
 
 RUN apt-get update && \
-    apt-get -y install curl rpm2cpio && \
-    cd /tmp && \
-    curl -s http://artifacts.zenoss.loc/europa/serviced/2113/serviced-1.0.0_2113-1.x86_64.rpm | rpm2cpio | cpio -div && \
-    mv opt/serviced/bin/serviced /usr/local/bin/serviced && \
+    apt-get install -y apt-transport-https ca-certificates curl software-properties-common python-selinux && \
+    curl https://download.docker.com/linux/ubuntu/gpg | apt-key add - && \
+    add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" && \
+    curl https://download.tuxfamily.org/ach/gpg | apt-key add - && \
+    add-apt-repository "deb [arch=amd64] https://download.tuxfamily.org/ach/ubuntu $(lsb_release -cs) main" && \
+    apt-get update && \
+    apt-get -y install curl gcc make rpm rpm2cpio ruby ruby-dev serviced && \
     apt-get clean autoclean && \
     apt-get autoremove -y && \
-    rm -rf /var/lib/{apt,dpkg,cache,log}/ && \
-    cd / && rm -rf /tmp/*
+    rm -rf /var/lib/{apt,dpkg,cache,log}/ 
 
-CMD ["/usr/local/bin/serviced", "template", "compile", "/usr/src/template"]
+RUN gem install fpm
