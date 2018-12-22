@@ -125,8 +125,8 @@ ZENPIPPKGSURL = http://zenpip.zenoss.eng/packages
 SERVICED_ARCHIVE=serviced-1.4.0-0.0.39.unstable.tgz
 serviced:
 	echo " extracting: $@"
-	curl -s $(ZENPIPPKGSURL)/$(SERVICED_ARCHIVE) | \
-		tar -v -xz --transform 's|.*/||g' ./opt/serviced/bin/serviced
+#	curl -s $(ZENPIPPKGSURL)/$(SERVICED_ARCHIVE) | \
+#		tar -v -xz --transform 's|.*/||g' ./opt/serviced/bin/serviced
 
 # Make root dir for packaging
 $(PKGROOT):

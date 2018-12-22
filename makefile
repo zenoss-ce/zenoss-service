@@ -113,8 +113,7 @@ svcdef_ImageID_maps     += $(jsonsrc_opentsdb_ImageID),$(desired_opentsdb_ImageI
 .PHONY: default docker_buildimage docker_svcdefpkg-% docker_svcdef-%
 
 
-$(SRCROOT):
-	services
+SRCROOT = services
 
 #
 # The serviced binary referenced by SVCDEF_EXE is injected into the build
@@ -156,7 +155,8 @@ $(SVCDEF_EXE):
 # service definitions for each product
 # to be managed by serviced.
 #-------------------------------------#
-svcdef_PRODUCTS = zenoss-core zenoss-resmgr zenoss-ucspm zenoss-nfvi
+svcdef_PRODUCTS = zenoss-core 
+#zenoss-resmgr zenoss-ucspm zenoss-nfvi
 svcdef_SRC_DIR  = services
 
 zenoss-core-$(BUILD_TAG).json_SRC_DIR   := $(svcdef_SRC_DIR)/Zenoss.core
@@ -168,8 +168,8 @@ zenoss-resmgr-$(BUILD_TAG).json_SRC     := $(shell find $(zenoss-resmgr-$(BUILD_
 zenoss-ucspm-$(BUILD_TAG).json_SRC_DIR := $(svcdef_SRC_DIR)/ucspm
 zenoss-ucspm-$(BUILD_TAG).json_SRC     := $(shell find $(zenoss-ucspm-$(BUILD_TAG).json_SRC_DIR) -type f -name '*.json' -print0)
 
-zenoss-nfvi-$(BUILD_TAG).json_SRC_DIR  := $(svcdef_SRC_DIR)/nfvi
-zenoss-nfvi-$(BUILD_TAG).json_SRC      := $(shell find $(zenoss-nfvi-$(BUILD_TAG).json_SRC_DIR) -type f -name '*.json' -print0)
+#zenoss-nfvi-$(BUILD_TAG).json_SRC_DIR  := $(svcdef_SRC_DIR)/nfvi
+#zenoss-nfvi-$(BUILD_TAG).json_SRC      := $(shell find $(zenoss-nfvi-$(BUILD_TAG).json_SRC_DIR) -type f -name '*.json' -print0)
 #-------------------------------------#
 
 # Rule to build service defintions for a list of products.
